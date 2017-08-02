@@ -47,6 +47,7 @@ class phpMQTT {
 	public $will;				/* stores the will of the client */
 	private $username;			/* stores username */
 	private $password;			/* stores password */
+	public $noclean = false; 	/* no use clean session */
 
 	public $socketContext;
 
@@ -303,7 +304,7 @@ class phpMQTT {
 			if(feof($this->socket)){
 				if($this->debug) echo "eof receive going to reconnect for good measure\n";
 				fclose($this->socket);
-				$this->connect_auto(false);
+				$this->connect_auto($this->noclean);
 				if(count($this->topics))
 					$this->subscribe($this->topics);	
 			}
@@ -353,7 +354,7 @@ class phpMQTT {
 			if($this->timesinceping<(time()-($this->keepalive*2))){
 				if($this->debug) echo "not seen a package in a while, disconnecting\n";
 				fclose($this->socket);
-				$this->connect_auto(false);
+				$this->connect_auto($this->noclean);
 				if(count($this->topics))
 					$this->subscribe($this->topics);
 			}
