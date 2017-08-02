@@ -184,7 +184,7 @@ class phpMQTT {
 	}
 
 	/* subscribe: subscribes to topics */
-	function subscribe($topics, $qos = 0){
+	function subscribe($topics, $qos = 1){
 		$i = 0;
 		$buffer = "";
 		$id = $this->msgid;
